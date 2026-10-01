@@ -896,6 +896,8 @@ public class MainActivity extends Activity implements LifecycleOwner {
 float gestureLastMidX,gestureLastMidY,gestureLastDist;
 
         BarcodeView(Context c){super(c);setBackgroundColor(0xFF081116);initGlyphs();}
+        boolean fineTune=false;
+        void setFineTune(boolean on){fineTune=on;invalidate();}
         void initGlyphs(){
             glyphs.put('9', "M14.825 424.690Q11.960 427.690 11.960 431.877Q11.960 435.940 14.694 438.502Q17.298 441.002 21.725 441.002Q29.472 441.002 30.839 436.439Q31.490 434.377 31.490 431.877Q31.490 427.190 28.756 424.440Q26.087 421.628 21.725 421.628Q17.624 421.628 14.825 424.690M10.528 442.377Q6.101 438.189 6.101 431.877Q6.101 425.378 10.788 420.691Q15.345 416.003 21.725 416.003Q28.300 416.003 32.792 420.378Q37.349 424.753 37.349 431.877Q37.349 436.315 35.982 439.877Q34.615 443.439 32.141 447.564Q26.738 456.626 18.926 463.563Q18.080 464.312 17.103 464.312Q15.996 464.312 15.150 463.500Q14.304 462.688 14.304 461.500Q14.304 460.313 15.215 459.438Q21.400 453.751 25.826 446.876L26.152 446.251L25.501 446.376Q23.808 446.626 21.725 446.626Q14.825 446.626 10.528 442.377Z");
             glyphs.put('8', "M100.647 422.878Q98.174 424.128 98.174 426.503Q98.174 428.065 98.759 429.253Q99.345 430.440 100.712 431.440Q102.014 432.377 102.861 432.877Q103.772 433.377 105.595 434.252L105.725 434.252L105.855 434.252Q107.678 433.440 108.590 432.940Q109.501 432.440 110.803 431.502Q112.105 430.502 112.691 429.315Q113.277 428.065 113.277 426.503Q113.277 424.128 110.803 422.878Q108.394 421.628 105.725 421.628Q103.056 421.628 100.647 422.878M105.725 440.689Q95.895 445.626 95.895 451.501Q95.895 455.001 98.825 456.938Q101.559 458.875 105.725 458.875L107.027 458.875Q110.477 458.875 112.951 456.688Q115.490 454.501 115.490 451.501Q115.490 445.564 105.986 440.689L105.855 440.564L105.725 440.689M94.593 460.875Q90.101 457.250 90.101 451.501Q90.101 443.939 99.345 437.814L99.736 437.564L99.345 437.314Q92.315 433.190 92.315 426.503Q92.315 421.941 96.481 419.003Q100.582 416.003 105.725 416.003Q110.803 416.003 114.969 419.003Q119.136 422.003 119.136 426.503Q119.136 430.190 117.313 432.752Q115.425 435.252 112.105 437.314L111.714 437.564L112.105 437.814Q121.349 443.939 121.349 451.501Q121.349 456.438 117.573 460.250Q113.797 464.062 108.459 464.500L105.725 464.500Q99.020 464.500 94.593 460.875Z");
@@ -1304,6 +1306,119 @@ float gestureLastMidX,gestureLastMidY,gestureLastDist;
             c.save(); c.clipRect(x,y,x+cw,y+ch);
             c.translate(x,y); c.scale(cw/PRINTER_W,ch/PREVIEW_H);
             drawLogical(c,PRINTER_W,PREVIEW_H); c.restore();
+            if(fineTune){
+                // pxPerMm : nombre de pixels écran par mm physique (58mm = largeur du barcode)
+                float pxPerMm = cw / 58f;
+
+                // ruleH : hauteur de la règle gauche en px (78mm)
+                float ruleH = 78f * pxPerMm;
+
+                // tick5 : espacement entre 2 graduations en px (5mm)
+                float tick5 = 5f * pxPerMm;
+
+                // x, y : coin haut-gauche de la zone barcode (déjà calculé en haut de onDraw)
+                // cw, ch : largeur/hauteur de la zone barcode (déjà calculé en haut de onDraw)
+
+                Paint r = new Paint();
+                r.setColor(0xFFFF00FF);
+
+                // --- Règle BAS (horizontale) : de (x, y+ch) à (x+cw, y+ch) → 58mm ---
+                // xx : position du tick courant, de 0 à cw
+                // cm : true si on est sur un multiple de 10mm (1cm)
+                for(float xx=0; xx<=cw; xx+=tick5){
+                    boolean cm = Math.round(xx/pxPerMm) % 10 == 0;
+                    r.setStrokeWidth(cm ? 1.75f : 1.25f);  // épaisseur : cm=1.75, 5mm=1.25
+                    float l = cm ? 21f : 7f;                // longueur : cm=21px, 5mm=7px
+                    c.drawLine(x+xx, y+ch, x+xx, y+ch-l, r); // tick vertical, pointe vers le haut
+                }
+                r.setStrokeWidth(1.25f);
+                c.drawLine(x, y+ch, x+cw, y+ch, r);  // ligne de base
+
+                // --- Règle GAUCHE (verticale) : de (x, y+ch) à (x, y+ch-ruleH) → 78mm ---
+                // yy : position du tick courant, de 0 à ruleH (de bas en haut)
+                for(float yy=0; yy<=ruleH; yy+=tick5){
+                    boolean cm = Math.round(yy/pxPerMm) % 10 == 0;
+                    r.setStrokeWidth(cm ? 1.75f : 1.25f);
+                    float l = cm ? 21f : 7f;
+                    c.drawLine(x, y+ch-yy, x+l, y+ch-yy, r); // tick horizontal, pointe vers la droite
+                }
+                r.setStrokeWidth(1.25f);
+                c.drawLine(x, y+ch, x, y+ch-ruleH, r);  // ligne de base
+                // --- SEGMENTS SUR LES RÈGLES ---
+                // Reproduction exacte du layout de drawLogical
+                float base = PRINTER_W / REF_W;
+                float widthRatio = 1f + (zoom * scaleX * base - 1f);
+                float effectiveWidth = REF_W * widthRatio;
+                float sy = base * zoom * scaleY;
+
+                // leadWidth (même formule que drawLogical)
+                String code = normalize();
+                char leadChar = code.charAt(0);
+                String leadPath = glyphs.get(leadChar);
+                float leadRawWidth = (leadPath != null) ? bboxWidth(leadPath) : 0f;
+                float leadWidth = leadRawWidth * sy * digitWidth;
+
+                // Position des barres (identique à drawLogical)
+                float layoutX = (PRINTER_W - effectiveWidth) / 2f;
+                float barLeft  = layoutX + 2f * leadWidth;
+                float availableBarWidth = effectiveWidth - 2.5f * leadWidth;
+                float barRight = barLeft + availableBarWidth;
+
+                // Move (identique à drawLogical)
+                float objectX = moveX * PRINTER_W;
+                float objectY = moveY * PREVIEW_H;
+
+                // Bords finaux dans l'espace imprimante
+                float bL = barLeft + objectX;
+                float bR = barRight + objectX;
+
+                // Y (déjà correct)
+                float bT = 8f + objectY;
+                float dataH = Math.max(1f, (REF_DATA_Y1 - REF_Y_TOP) * sy * barHeight);
+                float guardH = Math.max(dataH, (REF_GUARD_Y1 - REF_Y_TOP) * sy * barHeight);
+                float bB = 8f + guardH + objectY;
+
+                // Conversion imprimante → écran
+                float eL = x + bL * cw / PRINTER_W;
+                float eR = x + bR * cw / PRINTER_W;
+                float eT = y + bT * ch / PREVIEW_H;
+                float eB = y + bB * ch / PREVIEW_H;
+
+                // Longueurs physiques en mm
+                float segXmm = (bR - bL) / MM_PX;
+                float segYmm = (bB - bT) / MM_PX;
+
+                Paint seg = new Paint();
+                seg.setColor(0xFF00BFFF);
+                seg.setStrokeWidth(5f);
+
+                // Segment X : sur la règle basse
+                c.drawLine(eL, y + ch, eR, y + ch, seg);
+                c.drawLine(eL, y + ch - 10, eL, y + ch + 10, seg);
+                c.drawLine(eR, y + ch - 10, eR, y + ch + 10, seg);
+
+                // Segment Y : sur la règle gauche
+                c.drawLine(x, eT, x, eB, seg);
+                c.drawLine(x - 10, eT, x + 10, eT, seg);
+                c.drawLine(x - 10, eB, x + 10, eB, seg);
+
+                // Texte X : au-dessus
+                Paint txt = new Paint();
+                txt.setColor(0xFF00BFFF);
+                txt.setTextSize(22f);
+                txt.setTextAlign(Paint.Align.CENTER);
+                c.drawText(String.format("%.1f", segXmm), (eL + eR) / 2f, y + ch - 14f, txt);
+
+                // Texte Y : à droite
+                Paint txtY = new Paint();
+                txtY.setColor(0xFF00BFFF);
+                txtY.setTextSize(22f);
+                txtY.setTextAlign(Paint.Align.CENTER);
+                c.save();
+                c.rotate(-90f, x + 28f, (eT + eB) / 2f);
+                c.drawText(String.format("%.1f", segYmm), x + 28f, (eT + eB) / 2f, txtY);
+                c.restore();
+            }
             paint.setStyle(Paint.Style.STROKE);paint.setStrokeWidth(2f);paint.setColor(0xFF2B6E66);c.drawRect(x,y,x+cw,y+ch,paint);paint.setStyle(Paint.Style.FILL);
         }
         void syncGestureSliders(){
@@ -1496,6 +1611,7 @@ float gestureLastMidX,gestureLastMidY,gestureLastDist;
 
     void setShift(boolean on){
         shift=on;
+        preview.setFineTune(on);
         for(int i=0;i<sliders.length;i++){
             SliderCtl s=sliders[i];
             if(s!=null){s.fine=false;s.normal=s.current;}
