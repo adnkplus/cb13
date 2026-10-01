@@ -1,0 +1,18 @@
+<!--
+    This is an INSERTION REFERENCE, NOT a second AndroidManifest.xml.
+
+    Merge these pieces into the existing manifest:
+      1. camera permission already used by the current app
+      2. FileProvider for SHARE / PRINT
+
+    Keep the existing application/activity declarations.
+-->
+<provider
+    android:name="androidx.core.content.FileProvider"
+    android:authorities="${applicationId}.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+</provider>

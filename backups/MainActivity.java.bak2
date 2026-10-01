@@ -1,0 +1,494 @@
+package com.cb13;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.*;
+import android.graphics.drawable.ColorDrawable;
+import androidx.core.content.FileProvider;
+import androidx.core.graphics.PathParser;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+public class MainActivity extends Activity {
+    static final String PRINTER_PACKAGE = "com.farminos.print";
+    BarcodeView preview;
+    SlotEditText input;
+    boolean shift = false;
+    final SliderCtl[] sliders = new SliderCtl[8];
+    final float[] fineCenter = new float[8];
+    boolean suppressSeekCallbacks=false;
+
+    @Override public void onCreate(Bundle b) {
+        super.onCreate(b);
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setPadding(8,6,8,6);
+
+        TextView title = new TextView(this);
+        title.setText("CB13 • EAN-13");
+        title.setTextSize(20);
+        root.addView(title, new LinearLayout.LayoutParams(-1,42));
+
+        input = new SlotEditText(this);
+        input.setText("5901234123457");
+        input.setTextSize(25);
+        input.setSingleLine(true);
+        input.setPadding(8,0,8,0);
+        input.setBackground(new ColorDrawable(0xFFE7E7E7));
+        input.setOnSlotChangedListener(() -> { preview.setEan(input.getValue()); });
+        root.addView(input,new LinearLayout.LayoutParams(-1,54));
+
+        preview = new BarcodeView(this);
+        preview.setEan(input.getValue());
+        LinearLayout.LayoutParams vp=new LinearLayout.LayoutParams(-1,0,1f);
+        vp.topMargin=6; vp.bottomMargin=6;
+        root.addView(preview,vp);
+
+        addSlider(root,0,"Zoom",50,200,100);
+        addSlider(root,1,"Scale X",50,150,100);
+        addSlider(root,2,"Scale Y",50,150,100);
+        addSlider(root,3,"Move X",0,100,50);
+        addSlider(root,4,"Move Y",0,100,50);
+        addSlider(root,5,"Digit width",50,150,100);
+        addSlider(root,6,"Group spacing",50,150,100);
+        addSlider(root,7,"Bar height",50,150,100);
+
+        LinearLayout bottom=new LinearLayout(this);
+        TextView hint=new TextView(this);
+        hint.setText("Tap a slider name for ±5% fine tune");
+        hint.setTextSize(11);
+        bottom.addView(hint,new LinearLayout.LayoutParams(0,52,1f));
+
+        Button share=new Button(this); share.setText("SHARE / PRINT");
+        share.setOnClickListener(v->shareBitmap(!shift));
+        bottom.addView(share,new LinearLayout.LayoutParams(0,52,1f));
+        root.addView(bottom);
+
+        setContentView(root);
+    }
+
+    void addSlider(LinearLayout root,int i,String name,int min,int max,int value){
+        LinearLayout row=new LinearLayout(this);
+        row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        TextView label=new TextView(this); label.setText(name); label.setTextSize(12);
+        label.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        row.addView(label,new LinearLayout.LayoutParams(88,42));
+        SeekBar bar=new SeekBar(this); bar.setMax(1000);
+        suppressSeekCallbacks=true;
+        bar.setProgress(Math.round((value-min)*1000f/(max-min)));
+        suppressSeekCallbacks=false;
+        row.addView(bar,new LinearLayout.LayoutParams(0,42,1f));
+        TextView val=new TextView(this); val.setText(String.format(Locale.US,"%.1f%%",(float)value)); val.setTextSize(12);
+        row.addView(val,new LinearLayout.LayoutParams(65,42));
+        SliderCtl ctl=new SliderCtl(name,min,max,bar,val,i); ctl.current=value; ctl.normal=value; sliders[i]=ctl;
+        label.setOnClickListener(v -> {
+            if(!ctl.fine){
+                ctl.center=ctl.current;
+                ctl.fine=true;
+                ctl.bar.setProgress(500, false);
+                val.setText(formatValue(i,ctl.current));
+                label.setText("✓ "+name);
+            }else{
+                ctl.fine=false;
+                ctl.normal=ctl.current;
+                ctl.bar.setProgress(ctl.progressFromNormalValue(ctl.current), false);
+                val.setText(formatValue(i,ctl.current));
+                label.setText(name);
+            }
+            applySliders();
+        });
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+            public void onProgressChanged(SeekBar b,int p,boolean fromUser){
+                if(suppressSeekCallbacks)return;
+                ctl.current=ctl.valueFromProgress(p);
+                if(!shift || !ctl.fine) ctl.normal=ctl.current;
+                val.setText(formatValue(i,ctl.current));
+                applySliders();
+            }
+            public void onStartTrackingTouch(SeekBar b){}
+            public void onStopTrackingTouch(SeekBar b){}
+        });
+        label.setOnClickListener(v -> {
+            if(shift) toggleFineSlider(ctl,label);
+        });
+        root.addView(row);
+    }
+
+    void setProgressSilently(SeekBar bar,int progress){
+        suppressSeekCallbacks=true;
+        bar.setProgress(progress);
+        suppressSeekCallbacks=false;
+    }
+
+    void toggleFineSlider(SliderCtl s, TextView label){
+        if(!s.fine){
+            // Enter fine mode around the CURRENT absolute value.
+            // Moving the SeekBar to its middle must not change that value.
+            s.center=s.current;
+            s.fine=true;
+            fineCenter[s.index]=s.current;
+            setProgressSilently(s.bar,500);
+            label.setBackgroundColor(0xFFBDBDBD);
+        }else{
+            // Leave fine mode. Keep the value selected in the fine window
+            // and restore the absolute-value position.
+            s.fine=false;
+            setProgressSilently(s.bar,s.progressFromNormalValue(s.current));
+            label.setBackgroundColor(Color.TRANSPARENT);
+        }
+        s.valueView.setText(formatValue(s.index,s.current));
+        applySliders();
+    }
+
+    String formatValue(int i,float v){
+        if(i==3||i==4)return String.format(Locale.US,"%+.1f%%",(v-50f)*2f);
+        return String.format(Locale.US,"%.1f%%",v);
+    }
+
+    void setShift(boolean on){
+        shift=on;
+    }
+
+    void applySliders(){
+        if(preview==null)return;
+        preview.zoom=sliders[0].current/100f;
+        preview.scaleX=sliders[1].current/100f;
+        preview.scaleY=sliders[2].current/100f;
+        preview.moveX=(sliders[3].current-50f)/50f;
+        preview.moveY=(sliders[4].current-50f)/50f;
+        preview.digitWidth=sliders[5].current/100f;
+        preview.groupSpacing=sliders[6].current/100f;
+        preview.barHeight=sliders[7].current/100f;
+        preview.invalidate();
+    }
+
+    void shareBitmap(boolean direct){
+        try{
+            File dir=new File(getCacheDir(),"cb13"); dir.mkdirs();
+            File file=new File(dir,"cb13.png");
+            FileOutputStream out=new FileOutputStream(file);
+            preview.renderBitmap().compress(Bitmap.CompressFormat.PNG,100,out);
+            out.close();
+            Uri uri=FileProvider.getUriForFile(this,getPackageName()+".fileprovider",file);
+            Intent send=new Intent(Intent.ACTION_SEND);
+            send.setType("image/png"); send.putExtra(Intent.EXTRA_STREAM,uri);
+            send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if(direct){
+                send.setPackage(PRINTER_PACKAGE);
+                try{startActivity(send);return;}catch(Exception ignored){send.setPackage(null);}
+            }
+            startActivity(Intent.createChooser(send,"Share / print"));
+        }catch(Exception e){Toast.makeText(this,"Share failed: "+e.getMessage(),Toast.LENGTH_LONG).show();}
+    }
+
+    static class SliderCtl{
+        String name; int min,max,index; SeekBar bar; TextView valueView;
+        float current,normal,center; boolean fine;
+        SliderCtl(String n,int mn,int mx,SeekBar b,TextView v,int i){name=n;min=mn;max=mx;bar=b;valueView=v;index=i;}
+        float valueFromProgress(int p){
+            if(!fine)return min+(max-min)*(p/1000f);
+            float span=Math.max(0.01f,Math.abs(center)*0.05f);
+            if(index==3||index==4)span=5f;
+            return center-span+(2f*span)*(p/1000f);
+        }
+        int progressFromNormalValue(float v){
+            return Math.max(0,Math.min(1000,Math.round((v-min)*1000f/(max-min))));
+        }
+    }
+
+    static class SlotEditText extends EditText{
+        interface Listener{void changed();}
+        Listener listener;
+        void setOnSlotChangedListener(Listener l){ listener=l; }
+        String getValue(){
+            String s=getText().toString();
+            StringBuilder b=new StringBuilder();
+            for(int i=0;i<Math.min(13,s.length());i++)b.append(Character.isDigit(s.charAt(i))?s.charAt(i):' ');
+            while(b.length()<13)b.append(' ');
+            return b.toString();
+        }
+        boolean internal=false;
+        SlotEditText(Context c){
+            super(c);
+            setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+            if(android.os.Build.VERSION.SDK_INT>=29){
+                setCursorVisible(false);
+                setHighlightColor(0x55333333);
+            }
+            addTextChangedListener(new android.text.TextWatcher(){
+                String before;
+                int start;
+                public void beforeTextChanged(CharSequence s,int st,int count,int after){before=s.toString();start=st;}
+                public void onTextChanged(CharSequence s,int st,int beforeCount,int count){}
+                public void afterTextChanged(android.text.Editable e){
+                    if(internal)return;
+                    String now=e.toString();
+                    // Keep exactly 13 fixed slots. A typed digit replaces the slot
+                    // instead of inserting and shifting the remaining digits.
+                    if(now.length()>13){
+                        internal=true;
+                        String base=before;
+                        if(start<0)start=0;
+                        char inserted=' ';
+                        for(int i=start;i<now.length() && i<start+(now.length()-before.length()+1);i++){
+                            char ch=now.charAt(i);
+                            if(Character.isDigit(ch)){inserted=ch;break;}
+                        }
+                        StringBuilder b=new StringBuilder(base);
+                        while(b.length()<13)b.append(' ');
+                        if(start<13 && Character.isDigit(inserted))b.setCharAt(start,inserted);
+                        e.replace(0,e.length(),b);
+                        setSelection(Math.min(13,start+1));
+                        internal=false;
+                    } else if(now.length()<13){
+                        internal=true;
+                        while(e.length()<13)e.append(' ');
+                        internal=false;
+                    }
+                    if(listener!=null)listener.changed();
+                }
+            });
+        }
+        @Override protected void onDraw(Canvas c){
+            super.onDraw(c);
+            if(!hasSelection() || getSelectionStart()!=getSelectionEnd()) return;
+            int slot=Math.max(0,Math.min(12,getSelectionStart()));
+            float left=getCompoundPaddingLeft()+slot*(getWidth()-getCompoundPaddingLeft()-getCompoundPaddingRight())/13f;
+            float right=getCompoundPaddingLeft()+(slot+1)*(getWidth()-getCompoundPaddingLeft()-getCompoundPaddingRight())/13f;
+            Paint p=new Paint();
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(3f);
+            p.setColor(0xFF555555);
+            c.drawRect(left+1,getPaddingTop()+2,right-1,getHeight()-getPaddingBottom()-2,p);
+        }
+
+        @Override public boolean onKeyDown(int key,android.view.KeyEvent e){
+            int p=Math.max(0,Math.min(12,getSelectionStart()));
+            if(key==android.view.KeyEvent.KEYCODE_DEL){
+                if(p>0){getText().replace(p-1,p," ");setSelection(p-1);if(listener!=null)listener.changed();}
+                return true;
+            }
+            if(key==android.view.KeyEvent.KEYCODE_FORWARD_DEL){
+                if(p<13){getText().replace(p,p+1," ");setSelection(p);if(listener!=null)listener.changed();}
+                return true;
+            }
+            return super.onKeyDown(key,e);
+        }
+        @Override public boolean onTextContextMenuItem(int id){
+            boolean r=super.onTextContextMenuItem(id); if(listener!=null)listener.changed(); return r;
+        }
+    }
+
+    static class BarcodeView extends View{
+        String ean="5901234123457";
+        float zoom=1,scaleX=1,scaleY=1,moveX=0,moveY=0,digitWidth=1,groupSpacing=1,barHeight=1;
+        static final int PRINT_W=464;              // 58 mm at 203 dpi; fixed paper width.
+        static final int TOP_MARGIN_PX=8;
+        static final int LEFT_MARGIN_PX=8;
+        static final int RIGHT_MARGIN_PX=8;
+        Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);
+        Map<Character,String> glyphs=new HashMap<>();
+        float downX,downY,startMoveX,startMoveY,lastDist,lastMidX,lastMidY;
+        boolean twoFinger=false;
+        static final float REF_W=753, REF_BAR_X0=62, REF_BAR_X1=632, REF_Y_TOP=8, REF_DATA_Y1=408, REF_GUARD_Y1=440;
+        static final float[] REF_CENTERS={21.432f,105.6275f,147.725f,189.725f,231.725f,273.2695f,311.949f,381.725f,419.949f,465.6275f,507.725f,549.725f,591.725f};
+
+        BarcodeView(Context c){super(c);setBackgroundColor(0xFFD0D0D0);initGlyphs();}
+        void initGlyphs(){
+            glyphs.put('9', "M14.825 424.690Q11.960 427.690 11.960 431.877Q11.960 435.940 14.694 438.502Q17.298 441.002 21.725 441.002Q29.472 441.002 30.839 436.439Q31.490 434.377 31.490 431.877Q31.490 427.190 28.756 424.440Q26.087 421.628 21.725 421.628Q17.624 421.628 14.825 424.690M10.528 442.377Q6.101 438.189 6.101 431.877Q6.101 425.378 10.788 420.691Q15.345 416.003 21.725 416.003Q28.300 416.003 32.792 420.378Q37.349 424.753 37.349 431.877Q37.349 436.315 35.982 439.877Q34.615 443.439 32.141 447.564Q26.738 456.626 18.926 463.563Q18.080 464.312 17.103 464.312Q15.996 464.312 15.150 463.500Q14.304 462.688 14.304 461.500Q14.304 460.313 15.215 459.438Q21.400 453.751 25.826 446.876L26.152 446.251L25.501 446.376Q23.808 446.626 21.725 446.626Q14.825 446.626 10.528 442.377Z");
+            glyphs.put('8', "M100.647 422.878Q98.174 424.128 98.174 426.503Q98.174 428.065 98.759 429.253Q99.345 430.440 100.712 431.440Q102.014 432.377 102.861 432.877Q103.772 433.377 105.595 434.252L105.725 434.252L105.855 434.252Q107.678 433.440 108.590 432.940Q109.501 432.440 110.803 431.502Q112.105 430.502 112.691 429.315Q113.277 428.065 113.277 426.503Q113.277 424.128 110.803 422.878Q108.394 421.628 105.725 421.628Q103.056 421.628 100.647 422.878M105.725 440.689Q95.895 445.626 95.895 451.501Q95.895 455.001 98.825 456.938Q101.559 458.875 105.725 458.875L107.027 458.875Q110.477 458.875 112.951 456.688Q115.490 454.501 115.490 451.501Q115.490 445.564 105.986 440.689L105.855 440.564L105.725 440.689M94.593 460.875Q90.101 457.250 90.101 451.501Q90.101 443.939 99.345 437.814L99.736 437.564L99.345 437.314Q92.315 433.190 92.315 426.503Q92.315 421.941 96.481 419.003Q100.582 416.003 105.725 416.003Q110.803 416.003 114.969 419.003Q119.136 422.003 119.136 426.503Q119.136 430.190 117.313 432.752Q115.425 435.252 112.105 437.314L111.714 437.564L112.105 437.814Q121.349 443.939 121.349 451.501Q121.349 456.438 117.573 460.250Q113.797 464.062 108.459 464.500L105.725 464.500Q99.020 464.500 94.593 460.875Z");
+            glyphs.put('7', "M132.948 421.128Q132.101 420.253 132.101 419.066Q132.101 417.878 132.948 417.066Q133.794 416.253 135.031 416.253L160.420 416.253Q161.656 416.253 162.503 417.128Q163.349 417.941 163.349 419.066Q163.349 423.815 159.508 429.378Q158.336 431.127 154.951 435.190Q151.566 439.314 150.134 441.877Q145.902 449.376 145.902 461.438Q145.902 462.625 145.056 463.500Q144.210 464.312 143.103 464.312Q141.996 464.312 141.150 463.500Q140.304 462.688 140.304 461.438Q140.304 447.814 145.251 439.002Q146.749 436.439 150.134 432.127Q153.584 427.753 154.691 426.128Q156.253 423.628 156.839 422.378L156.969 421.941L135.031 421.941Q133.859 421.941 132.948 421.128Z");
+            glyphs.put('6', "M178.658 460.438Q174.297 456.376 174.101 449.689L174.101 448.939Q174.101 441.127 178.593 434.002Q180.416 431.065 183.020 427.815Q185.559 424.503 187.316 422.565Q189.074 420.566 192.329 417.003Q193.045 416.191 194.347 416.191Q195.454 416.191 196.300 417.066Q197.146 417.878 197.146 419.003Q197.146 420.066 196.430 420.941Q189.074 428.940 185.624 433.752L185.168 434.377L185.884 434.252Q187.772 433.877 189.725 433.877Q196.821 433.877 201.052 438.127Q205.349 442.439 205.349 449.689Q205.349 456.251 200.922 460.375Q196.495 464.500 189.725 464.500Q182.955 464.500 178.658 460.438M182.564 442.252Q179.960 444.939 179.960 449.689Q179.960 453.938 182.694 456.438Q185.363 458.875 189.725 458.875Q194.022 458.875 196.691 456.376Q199.490 453.876 199.490 449.689Q199.490 444.814 196.951 442.189Q194.477 439.502 189.725 439.502Q185.103 439.502 182.564 442.252Z");
+            glyphs.put('5', "M218.640 463.688Q217.794 462.875 217.794 461.688Q217.794 460.438 218.640 459.625Q219.552 458.813 220.723 458.813Q233.873 458.813 237.714 451.751Q238.886 449.626 238.886 447.689Q238.886 443.127 236.673 440.814Q233.743 437.502 226.387 437.502Q224.369 437.502 222.286 437.689L222.025 437.689Q220.854 437.689 219.942 436.939Q219.096 436.127 219.096 435.002L219.096 434.815L220.007 418.878Q220.137 417.753 220.919 417.003Q221.765 416.253 222.937 416.253L241.425 416.253Q242.662 416.253 243.508 417.128Q244.354 417.941 244.354 419.066Q244.354 420.191 243.443 421.066Q242.597 421.941 241.425 421.941L225.671 421.941L225.150 431.752L226.387 431.752Q234.655 431.752 239.667 435.815Q244.745 439.814 244.745 447.689Q244.745 451.001 243.248 453.876Q241.685 456.813 239.342 458.875Q233.092 464.500 220.723 464.500Q219.552 464.500 218.640 463.688M222.221 437.689Q222.221 437.689 222.286 437.689Q222.286 437.689 222.221 437.689Z");
+            glyphs.put('4', "M258.948 452.626Q258.101 451.813 258.101 450.626L258.101 447.939Q258.101 447.439 258.427 446.751L272.293 417.816Q272.553 417.128 273.269 416.691Q273.986 416.191 274.767 416.191Q275.939 416.191 276.785 417.066Q277.631 417.878 277.631 419.003Q277.631 419.628 277.306 420.191L264.286 447.814L276.980 447.814L276.980 440.252Q276.980 439.127 277.826 438.314Q278.673 437.439 279.779 437.439Q280.886 437.439 281.732 438.314Q282.644 439.127 282.644 440.252L282.644 447.814L286.420 447.814Q287.656 447.814 288.503 448.689Q289.349 449.501 289.349 450.626Q289.349 451.751 288.438 452.626Q287.591 453.438 286.420 453.438L282.644 453.438L282.644 461.500Q282.644 462.625 281.732 463.438Q280.886 464.312 279.779 464.312Q278.673 464.312 277.826 463.500Q276.980 462.625 276.980 461.500L276.980 453.438L261.031 453.438Q259.859 453.438 258.948 452.626Z");
+            glyphs.put('3', "M301.468 462.125Q300.101 461.125 300.101 459.625Q300.101 458.438 300.948 457.625Q301.859 456.751 303.031 456.751Q303.421 456.751 304.137 457.001Q308.304 458.813 312.861 458.813Q317.808 458.813 321.193 456.438Q324.644 454.001 324.904 449.376L324.904 448.751Q324.904 445.564 322.821 443.314Q320.868 441.127 318.004 440.189Q315.204 439.314 311.754 439.314Q310.647 439.314 309.801 438.502Q308.955 437.627 308.955 436.439Q308.955 435.315 309.541 434.690L321.519 421.941L303.226 421.941Q302.054 421.941 301.143 421.128Q300.297 420.253 300.297 419.066Q300.297 417.878 301.143 417.066Q301.989 416.253 303.226 416.253L326.206 416.253Q327.378 416.253 328.224 417.128Q329.136 417.941 329.136 419.066L329.136 421.316Q329.136 422.316 328.224 423.190L317.743 434.252L318.264 434.377Q323.797 435.752 327.313 439.439Q330.763 443.127 330.763 448.689L330.763 449.689Q330.438 456.501 325.230 460.500Q320.152 464.500 312.861 464.500Q311.038 464.500 309.215 464.312Q307.392 464.125 305.114 463.688Q302.835 463.188 301.468 462.125Z");
+            glyphs.put('2', "M368.054 424.065Q367.208 423.190 367.208 422.128Q367.208 420.566 368.445 419.753Q374.369 416.003 381.725 416.003Q387.649 416.003 391.620 419.628Q395.656 423.190 395.656 429.003Q395.656 431.315 394.810 433.440Q393.964 435.627 392.857 437.002Q391.816 438.377 389.732 440.064Q387.649 441.752 386.542 442.502Q385.501 443.252 383.222 444.689Q380.749 446.251 379.642 447.064Q378.535 447.876 376.973 449.501Q375.410 451.063 374.694 453.063Q373.978 455.001 373.848 457.688L373.848 458.000L393.118 458.000Q394.354 458.000 395.201 458.875Q396.047 459.688 396.047 460.813Q396.047 461.938 395.136 462.813Q394.289 463.625 393.118 463.625L370.854 463.625Q369.682 463.625 368.770 462.813Q367.924 461.938 367.924 460.813L367.924 459.500Q367.924 454.626 368.575 452.501Q369.682 448.751 372.741 445.814Q375.801 442.814 380.228 439.939Q386.347 436.002 387.975 433.752Q389.797 431.502 389.797 429.003Q389.797 425.690 387.389 423.628Q385.110 421.628 381.725 421.628Q375.866 421.628 371.830 424.378Q371.114 424.878 370.137 424.878Q368.966 424.878 368.054 424.065Z");
+            glyphs.put('1', "M410.966 430.627Q410.119 429.752 410.119 428.628Q410.119 427.315 410.966 426.690L422.879 416.878Q423.725 416.191 424.767 416.191L426.850 416.191Q428.022 416.191 428.868 417.066Q429.779 417.878 429.779 419.003L429.779 461.500Q429.779 462.625 428.868 463.500Q428.022 464.312 426.850 464.312Q425.678 464.312 424.767 463.500Q423.920 462.688 423.920 461.500L423.920 423.440L415.002 430.752Q414.156 431.440 413.049 431.440Q411.812 431.440 410.966 430.627Z");
+            glyphs.put('0', "M465.986 464.500L465.725 464.500Q461.884 464.437 459.020 463.250Q456.156 462.125 454.463 460.313Q452.770 458.438 451.794 455.501Q450.752 452.563 450.427 449.564Q450.101 446.626 450.101 442.627Q450.101 439.064 450.166 436.564Q450.297 434.002 450.687 431.065Q451.078 428.065 451.729 426.065Q452.445 424.003 453.617 421.941Q454.788 419.941 456.416 418.753Q458.043 417.566 460.387 416.816Q462.731 416.066 465.725 416.066Q468.655 416.066 470.998 416.816Q473.342 417.566 474.969 418.753Q476.597 419.941 477.834 421.941Q479.005 424.003 479.656 426.065Q480.373 428.128 480.763 431.065Q481.154 434.002 481.219 436.564Q481.349 439.127 481.349 442.627Q481.349 445.126 481.219 447.189Q481.089 449.189 480.633 451.563Q480.242 453.938 479.591 455.751Q478.940 457.500 477.703 459.188Q476.467 460.875 474.904 462.000Q473.342 463.125 471.063 463.813Q468.785 464.500 465.986 464.500M455.960 437.502L455.960 442.627Q455.960 445.439 456.090 447.439Q456.286 449.439 456.872 451.751Q457.392 454.063 458.434 455.501Q459.476 457.001 461.298 458.000Q463.121 458.938 465.725 458.938L467.092 458.938Q468.915 458.938 470.347 458.250Q471.779 457.500 472.626 456.126Q473.537 454.813 474.123 453.313Q474.709 451.751 474.969 449.814Q475.295 447.814 475.360 446.189Q475.490 444.564 475.490 442.627L475.490 439.752Q475.490 437.814 475.425 436.689Q475.425 435.502 475.360 433.752Q475.295 431.940 475.099 430.940Q474.904 429.877 474.579 428.440Q474.253 427.003 473.732 426.128Q473.212 425.253 472.495 424.315Q471.714 423.378 470.803 422.878Q469.826 422.316 468.524 422.003Q467.288 421.691 465.725 421.691Q464.098 421.691 462.796 422.066Q461.559 422.378 460.582 423.003Q459.606 423.628 458.825 424.565Q458.108 425.440 457.588 426.565Q457.067 427.628 456.741 428.940Q456.416 430.190 456.286 431.627Q456.156 433.002 456.025 434.502Q455.960 435.940 455.960 437.502Z");
+        }
+
+        void setEan(String s){ean=s;invalidate();}
+        String checksum(String s){int sum=0;for(int i=0;i<12;i++)sum+=(s.charAt(i)-48)*((i%2==0)?1:3);return Integer.toString((10-sum%10)%10);}
+        String normalize(){
+            String s=ean.replaceAll("[^0-9]","");
+            if(s.length()==12)return s+checksum(s);
+            if(s.length()==13)return s.substring(0,12)+checksum(s.substring(0,12));
+            while(s.length()<12)s+="0";
+            return s.substring(0,12)+checksum(s.substring(0,12));
+        }
+        String modules(String c){
+            String[] L={"0001101","0011001","0010011","0111101","0100011","0110001","0101111","0111011","0110111","0001011"};
+            String[] G={"0100111","0110011","0011011","0100001","0011101","0111001","0000101","0010001","0001001","0010111"};
+            String[] R={"1110010","1100110","1101100","1000010","1011100","1001110","1010000","1000100","1001000","1110100"};
+            String[] P={"LLLLLL","LLGLGG","LLGGLG","LLGGGL","LGLLGG","LGGLLG","LGGGLL","LGLGLG","LGLGGL","LGGLGL"};
+            StringBuilder b=new StringBuilder("101"); String p=P[c.charAt(0)-48];
+            for(int i=0;i<6;i++){int d=c.charAt(i+1)-48;b.append(p.charAt(i)=='L'?L[d]:G[d]);}
+            b.append("01010"); for(int i=7;i<13;i++)b.append(R[c.charAt(i)-48]); b.append("101"); return b.toString();
+        }
+        float bboxWidth(String d){Path p=PathParser.createPathFromPathData(d);RectF b=new RectF();p.computeBounds(b,true);return b.width();}
+
+        void drawBarcode(Canvas canvas,int w,int h){
+            canvas.drawColor(Color.WHITE);
+            String code=normalize();
+
+            // The printer bitmap has one fixed width. Preview is only a scaled view
+            // of the same logical geometry.
+            float logicalW=PRINT_W;
+            float availableW=logicalW-LEFT_MARGIN_PX-RIGHT_MARGIN_PX;
+
+            float sy=Math.max(0.15f,(h*0.58f)/(464.5f-8f));
+            float digitScale=sy*digitWidth;
+
+            String firstGlyph=glyphs.get(code.charAt(0));
+            float leadW=bboxWidth(firstGlyph)*digitScale;
+            float left=LEFT_MARGIN_PX;
+            float gap=leadW*.5f;
+            float right=RIGHT_MARGIN_PX;
+
+            float barLeft=left+leadW+gap;
+            float barW=Math.max(1f,logicalW-barLeft-right);
+
+            float top=TOP_MARGIN_PX;
+            float dataH=(REF_DATA_Y1-REF_Y_TOP)*sy*barHeight;
+            float guardH=Math.max(dataH,(REF_GUARD_Y1-REF_Y_TOP)*sy*barHeight);
+
+            // X/Y resizing may change the barcode rectangle, but glyphs themselves
+            // always use one uniform scale, so digits never become stretched.
+            float contentScale=(w/logicalW)*zoom;
+            float ox=(w-logicalW*contentScale)/2f+moveX*w*.35f;
+            float oy=moveY*h*.35f;
+
+            canvas.save();
+            canvas.translate(ox,oy);
+            canvas.scale(contentScale*scaleX,contentScale*scaleY);
+
+            // Clip to the mandatory global margins. Anything crossing them is
+            // intentionally truncated rather than moving the margins.
+            canvas.clipRect(LEFT_MARGIN_PX,TOP_MARGIN_PX,logicalW-RIGHT_MARGIN_PX,h);
+
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.BLACK);
+
+            String m=modules(code);
+            float mw=barW/95f;
+            for(int i=0;i<95;){
+                if(m.charAt(i)=='1'){
+                    int j=i+1;
+                    while(j<95&&m.charAt(j)=='1')j++;
+                    boolean guard=i<3||i>=92||(i>=45&&i<50);
+                    float bh=guard?guardH:dataH;
+                    canvas.drawRect(barLeft+i*mw,top,barLeft+j*mw,top+bh,paint);
+                    i=j;
+                }else i++;
+            }
+
+            float scaledBarW=barW;
+            for(int idx=0;idx<13;idx++){
+                String d=glyphs.get(code.charAt(idx));
+                if(d==null)continue;
+
+                float cx;
+                if(idx==0){
+                    cx=left+leadW/2f;
+                }else{
+                    int st=idx<7?1:7,en=idx<7?7:13;
+                    float first=barLeft+(REF_CENTERS[st]-REF_BAR_X0)/570f*scaledBarW;
+                    float last=barLeft+(REF_CENTERS[en-1]-REF_BAR_X0)/570f*scaledBarW;
+                    float t=(idx-st)/(float)(en-st-1);
+                    cx=first+(last-first)*t;
+                }
+
+                Path p=PathParser.createPathFromPathData(d);
+                RectF b=new RectF();
+                p.computeBounds(b,true);
+
+                // Uniform digit scale preserves the original glyph aspect ratio.
+                float sx=digitScale;
+                float sourceCx=(b.left+b.right)/2f;
+                Matrix mm=new Matrix();
+                mm.setScale(sx,sx);
+                mm.postTranslate(cx-sourceCx*sx,top-b.top*sx);
+                p.transform(mm);
+                canvas.drawPath(p,paint);
+            }
+
+            canvas.restore();
+
+            // Preview frame only. It is NOT part of the printable bitmap.
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setColor(0xFF999999);
+            paint.setStrokeWidth(1);
+            canvas.drawRect(.5f,.5f,w-.5f,h-.5f,paint);
+            paint.setStyle(Paint.Style.FILL);
+        }
+
+        @Override protected void onDraw(Canvas c){
+            super.onDraw(c);
+            drawBarcode(c,getWidth(),getHeight());
+        }
+        Bitmap renderBitmap(){
+            int w=PRINT_W;
+            String code=normalize();
+
+            // Determine the real printed bottom from the current barcode geometry.
+            float sy=Math.max(0.15f,(Math.max(140,(int)(w*.34f))*0.58f)/(464.5f-8f));
+            float dataH=(REF_DATA_Y1-REF_Y_TOP)*sy*barHeight;
+            float guardH=Math.max(dataH,(REF_GUARD_Y1-REF_Y_TOP)*sy*barHeight);
+            float contentBottom=TOP_MARGIN_PX+guardH;
+            int h=Math.max(TOP_MARGIN_PX+1,(int)Math.ceil(contentBottom));
+
+            Bitmap b=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
+            drawBarcode(new Canvas(b),w,h);
+            return b;
+        }
+
+        @Override public boolean onTouchEvent(MotionEvent e){
+            int n=e.getPointerCount();
+            switch(e.getActionMasked()){
+                case MotionEvent.ACTION_DOWN:downX=e.getX();downY=e.getY();startMoveX=moveX;startMoveY=moveY;twoFinger=false;return true;
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    if(n>=2){twoFinger=true;lastDist=dist(e);lastMidX=midX(e);lastMidY=midY(e);} return true;
+                case MotionEvent.ACTION_MOVE:
+                    if(n==1&&!twoFinger){
+                        moveX=startMoveX+(e.getX()-downX)/getWidth()*2.2f;
+                        moveY=startMoveY+(e.getY()-downY)/getHeight()*2.2f;
+                    }else if(n>=2){
+                        float nd=dist(e),dx=midX(e)-lastMidX,dy=midY(e)-lastMidY;
+                        if(Math.abs(nd-lastDist)>Math.abs(dx)+Math.abs(dy)) zoom=Math.max(.2f,Math.min(3f,zoom+(nd-lastDist)/300f));
+                        else if(Math.abs(dx)>=Math.abs(dy)){
+                            float f=scaleX+dx/300f;
+                            f=Math.max(.3f,Math.min(2.5f,f));
+                            scaleX=f; scaleY=f;
+                        }else{
+                            float f=scaleY+dy/300f;
+                            f=Math.max(.3f,Math.min(2.5f,f));
+                            scaleX=f; scaleY=f;
+                        }
+                        lastDist=nd;lastMidX=midX(e);lastMidY=midY(e);
+                    }
+                    invalidate();return true;
+                case MotionEvent.ACTION_POINTER_UP:
+                    if(n<=2){twoFinger=false;downX=e.getX(0);downY=e.getY(0);startMoveX=moveX;startMoveY=moveY;}return true;
+                case MotionEvent.ACTION_UP:case MotionEvent.ACTION_CANCEL:twoFinger=false;return true;
+            }
+            return true;
+        }
+        float dist(MotionEvent e){return e.getPointerCount()<2?0:(float)Math.hypot(e.getX(0)-e.getX(1),e.getY(0)-e.getY(1));}
+        float midX(MotionEvent e){return(e.getX(0)+e.getX(1))/2f;} float midY(MotionEvent e){return(e.getY(0)+e.getY(1))/2f;}
+    }
+}

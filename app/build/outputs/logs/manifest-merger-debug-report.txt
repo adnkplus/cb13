@@ -1,0 +1,312 @@
+-- Merging decision tree log ---
+provider#androidx.core.content.FileProvider
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:6:9-10:20
+	android:grantUriPermissions
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:8:38-72
+	android:authorities
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:7:13-64
+	android:exported
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:8:13-37
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:6:19-68
+manifest
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:2:1-18:12
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:2:1-18:12
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:2:1-18:12
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:2:1-18:12
+MERGED from [androidx.camera:camera-video:1.4.2] /home/vortex/.gradle/caches/transforms-4/90e79bcc9c982eaf32b0b591a3c6b7eb/transformed/camera-video-1.4.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-view:1.4.2] /home/vortex/.gradle/caches/transforms-4/d6d1036e550f4745529d296183cde40a/transformed/camera-view-1.4.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-lifecycle:1.4.2] /home/vortex/.gradle/caches/transforms-4/b0ada682ca420d79cacdb842a7a9fcd5/transformed/camera-lifecycle-1.4.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:17:1-36:12
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:17:1-36:12
+MERGED from [androidx.recyclerview:recyclerview:1.4.0] /home/vortex/.gradle/caches/transforms-4/7ddf89102aaa1d0884bb84105005ac28/transformed/recyclerview-1.4.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat:1.1.0] /home/vortex/.gradle/caches/transforms-4/721017609b988de9ca86faca65e455e8/transformed/appcompat-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.9.1] /home/vortex/.gradle/caches/transforms-4/0b8eff4874a25830d19c2df289b54dfd/transformed/fragment-1.9.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.loader:loader:1.0.0] /home/vortex/.gradle/caches/transforms-4/fb5b2ecf6e69dc742d13a10dc2b8ccb4/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/vortex/.gradle/caches/transforms-4/19d023f3a60eea4cf5eb1c532bab591d/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/vortex/.gradle/caches/transforms-4/3a1b5e9dab358c49201b208de549184c/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /home/vortex/.gradle/caches/transforms-4/834f64c037d3eb1d80c9120d616e8ddf/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.8.1] /home/vortex/.gradle/caches/transforms-4/c92c57fde9a45232802a87f05208052e/transformed/activity-1.8.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.8.1] /home/vortex/.gradle/caches/transforms-4/7452ac39a5b6d13945d82cd190f32bf0/transformed/activity-ktx-1.8.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/vortex/.gradle/caches/transforms-4/929e15cc90e4482b3c602a7029e2fd60/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.10.0] /home/vortex/.gradle/caches/transforms-4/b939b1f2146fe25012136e9d574df058/transformed/lifecycle-viewmodel-2.10.0/AndroidManifest.xml:2:1-5:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/fc4697787301ceecc31f30d5f9bcbbff/transformed/lifecycle-viewmodel/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/302a836588fb8047a95c846b631caf77/transformed/lifecycle-runtime-ktx/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0] /home/vortex/.gradle/caches/transforms-4/35f748d0a78f15902a5e207ee5f5c349/transformed/lifecycle-livedata-core-ktx-2.10.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.10.0] /home/vortex/.gradle/caches/transforms-4/4e3aa38edc58f230443a9cbb8c587e2f/transformed/lifecycle-livedata-2.10.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/91d06532011f3529daeeff966cc3f17f/transformed/lifecycle-runtime/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.4.0] /home/vortex/.gradle/caches/transforms-4/0e2a30bd5ec90f37b97a962f23186f60/transformed/savedstate-ktx-1.4.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate-android:1.4.0] /home/vortex/.gradle/caches/transforms-4/1cd36435d415a6077dc170f12453ae8c/transformed/savedstate/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0] /home/vortex/.gradle/caches/transforms-4/288b714a3e74029492924c038f014680/transformed/lifecycle-viewmodel-ktx-2.10.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.10.0] /home/vortex/.gradle/caches/transforms-4/f07cdfb6f29dde2e8480d749479f2e3e/transformed/lifecycle-livedata-core-2.10.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/b34232e8134714ea2bbb84b12e661063/transformed/lifecycle-viewmodel-savedstate/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.15.0] /home/vortex/.gradle/caches/transforms-4/b0b4e395c223c0f9114717ab6c9c7c1f/transformed/core-ktx-1.15.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /home/vortex/.gradle/caches/transforms-4/73edea8bd5764d33b17f1efe21869fc8/transformed/appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/vortex/.gradle/caches/transforms-4/fcc72929abf7ab70d5bd488056277013/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/vortex/.gradle/caches/transforms-4/50cb2606853dba48988d7895609596c9/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/vortex/.gradle/caches/transforms-4/8b812f897cbfdb95ce6a244d65e73375/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/vortex/.gradle/caches/transforms-4/06899ad34059219eddc5e1f866c33acb/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /home/vortex/.gradle/caches/transforms-4/73330325b6b38df076df80d3d639ed2f/transformed/exifinterface-1.3.2/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/vortex/.gradle/caches/transforms-4/91f69ae0b6602f583ef334e07bc064ad/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/vortex/.gradle/caches/transforms-4/50cee7bea3b7216f9454a162ed58ac2e/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing-ktx:2.0.0] /home/vortex/.gradle/caches/transforms-4/0d34e8be6c0b1ac58b9f64a659c5160f/transformed/tracing-ktx-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.tracing:tracing-android:2.0.0] /home/vortex/.gradle/caches/transforms-4/e600b4715ff0909997fce468791ebef6/transformed/tracing/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/vortex/.gradle/caches/transforms-4/7e47532fc8952ac6dafed862a59f4d72/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-viewtree:1.0.0] /home/vortex/.gradle/caches/transforms-4/e8d8cae9808c1a23afefa5cc13c027c7/transformed/core-viewtree-1.0.0/AndroidManifest.xml:2:1-7:12
+	package
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:3:5-65
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:3:22-62
+uses-permission#android.permission.MANAGE_EXTERNAL_STORAGE
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:4:5-82
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:4:22-79
+application
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:5:5-17:19
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:5:5-17:19
+MERGED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/vortex/.gradle/caches/transforms-4/06899ad34059219eddc5e1f866c33acb/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/vortex/.gradle/caches/transforms-4/06899ad34059219eddc5e1f866c33acb/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:5:98-124
+	android:label
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:5:50-70
+	android:allowBackup
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:5:71-97
+	android:theme
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:5:18-49
+activity#com.cb13.MainActivity
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:11:9-16:20
+	android:screenOrientation
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:11:48-84
+	android:exported
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:11:85-108
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:11:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:12:13-15:29
+action#android.intent.action.MAIN
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:13:17-69
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:13:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:14:17-77
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:14:27-74
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:9:13-112
+	android:resource
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:9:75-109
+	android:name
+		ADDED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml:9:24-74
+uses-sdk
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+MERGED from [androidx.camera:camera-video:1.4.2] /home/vortex/.gradle/caches/transforms-4/90e79bcc9c982eaf32b0b591a3c6b7eb/transformed/camera-video-1.4.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-video:1.4.2] /home/vortex/.gradle/caches/transforms-4/90e79bcc9c982eaf32b0b591a3c6b7eb/transformed/camera-video-1.4.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-view:1.4.2] /home/vortex/.gradle/caches/transforms-4/d6d1036e550f4745529d296183cde40a/transformed/camera-view-1.4.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-view:1.4.2] /home/vortex/.gradle/caches/transforms-4/d6d1036e550f4745529d296183cde40a/transformed/camera-view-1.4.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-lifecycle:1.4.2] /home/vortex/.gradle/caches/transforms-4/b0ada682ca420d79cacdb842a7a9fcd5/transformed/camera-lifecycle-1.4.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-lifecycle:1.4.2] /home/vortex/.gradle/caches/transforms-4/b0ada682ca420d79cacdb842a7a9fcd5/transformed/camera-lifecycle-1.4.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:21:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.4.0] /home/vortex/.gradle/caches/transforms-4/7ddf89102aaa1d0884bb84105005ac28/transformed/recyclerview-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.4.0] /home/vortex/.gradle/caches/transforms-4/7ddf89102aaa1d0884bb84105005ac28/transformed/recyclerview-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.1.0] /home/vortex/.gradle/caches/transforms-4/721017609b988de9ca86faca65e455e8/transformed/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.1.0] /home/vortex/.gradle/caches/transforms-4/721017609b988de9ca86faca65e455e8/transformed/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.9.1] /home/vortex/.gradle/caches/transforms-4/0b8eff4874a25830d19c2df289b54dfd/transformed/fragment-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.9.1] /home/vortex/.gradle/caches/transforms-4/0b8eff4874a25830d19c2df289b54dfd/transformed/fragment-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/vortex/.gradle/caches/transforms-4/fb5b2ecf6e69dc742d13a10dc2b8ccb4/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/vortex/.gradle/caches/transforms-4/fb5b2ecf6e69dc742d13a10dc2b8ccb4/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/vortex/.gradle/caches/transforms-4/19d023f3a60eea4cf5eb1c532bab591d/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/vortex/.gradle/caches/transforms-4/19d023f3a60eea4cf5eb1c532bab591d/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/vortex/.gradle/caches/transforms-4/3a1b5e9dab358c49201b208de549184c/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/vortex/.gradle/caches/transforms-4/3a1b5e9dab358c49201b208de549184c/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /home/vortex/.gradle/caches/transforms-4/834f64c037d3eb1d80c9120d616e8ddf/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /home/vortex/.gradle/caches/transforms-4/834f64c037d3eb1d80c9120d616e8ddf/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.1] /home/vortex/.gradle/caches/transforms-4/c92c57fde9a45232802a87f05208052e/transformed/activity-1.8.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.1] /home/vortex/.gradle/caches/transforms-4/c92c57fde9a45232802a87f05208052e/transformed/activity-1.8.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.1] /home/vortex/.gradle/caches/transforms-4/7452ac39a5b6d13945d82cd190f32bf0/transformed/activity-ktx-1.8.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.1] /home/vortex/.gradle/caches/transforms-4/7452ac39a5b6d13945d82cd190f32bf0/transformed/activity-ktx-1.8.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/vortex/.gradle/caches/transforms-4/929e15cc90e4482b3c602a7029e2fd60/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/vortex/.gradle/caches/transforms-4/929e15cc90e4482b3c602a7029e2fd60/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.10.0] /home/vortex/.gradle/caches/transforms-4/b939b1f2146fe25012136e9d574df058/transformed/lifecycle-viewmodel-2.10.0/AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.10.0] /home/vortex/.gradle/caches/transforms-4/b939b1f2146fe25012136e9d574df058/transformed/lifecycle-viewmodel-2.10.0/AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/fc4697787301ceecc31f30d5f9bcbbff/transformed/lifecycle-viewmodel/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/fc4697787301ceecc31f30d5f9bcbbff/transformed/lifecycle-viewmodel/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/302a836588fb8047a95c846b631caf77/transformed/lifecycle-runtime-ktx/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/302a836588fb8047a95c846b631caf77/transformed/lifecycle-runtime-ktx/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0] /home/vortex/.gradle/caches/transforms-4/35f748d0a78f15902a5e207ee5f5c349/transformed/lifecycle-livedata-core-ktx-2.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0] /home/vortex/.gradle/caches/transforms-4/35f748d0a78f15902a5e207ee5f5c349/transformed/lifecycle-livedata-core-ktx-2.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.10.0] /home/vortex/.gradle/caches/transforms-4/4e3aa38edc58f230443a9cbb8c587e2f/transformed/lifecycle-livedata-2.10.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.10.0] /home/vortex/.gradle/caches/transforms-4/4e3aa38edc58f230443a9cbb8c587e2f/transformed/lifecycle-livedata-2.10.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/91d06532011f3529daeeff966cc3f17f/transformed/lifecycle-runtime/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/91d06532011f3529daeeff966cc3f17f/transformed/lifecycle-runtime/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.4.0] /home/vortex/.gradle/caches/transforms-4/0e2a30bd5ec90f37b97a962f23186f60/transformed/savedstate-ktx-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.4.0] /home/vortex/.gradle/caches/transforms-4/0e2a30bd5ec90f37b97a962f23186f60/transformed/savedstate-ktx-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-android:1.4.0] /home/vortex/.gradle/caches/transforms-4/1cd36435d415a6077dc170f12453ae8c/transformed/savedstate/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-android:1.4.0] /home/vortex/.gradle/caches/transforms-4/1cd36435d415a6077dc170f12453ae8c/transformed/savedstate/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0] /home/vortex/.gradle/caches/transforms-4/288b714a3e74029492924c038f014680/transformed/lifecycle-viewmodel-ktx-2.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0] /home/vortex/.gradle/caches/transforms-4/288b714a3e74029492924c038f014680/transformed/lifecycle-viewmodel-ktx-2.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.10.0] /home/vortex/.gradle/caches/transforms-4/f07cdfb6f29dde2e8480d749479f2e3e/transformed/lifecycle-livedata-core-2.10.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.10.0] /home/vortex/.gradle/caches/transforms-4/f07cdfb6f29dde2e8480d749479f2e3e/transformed/lifecycle-livedata-core-2.10.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/b34232e8134714ea2bbb84b12e661063/transformed/lifecycle-viewmodel-savedstate/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0] /home/vortex/.gradle/caches/transforms-4/b34232e8134714ea2bbb84b12e661063/transformed/lifecycle-viewmodel-savedstate/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.15.0] /home/vortex/.gradle/caches/transforms-4/b0b4e395c223c0f9114717ab6c9c7c1f/transformed/core-ktx-1.15.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.15.0] /home/vortex/.gradle/caches/transforms-4/b0b4e395c223c0f9114717ab6c9c7c1f/transformed/core-ktx-1.15.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /home/vortex/.gradle/caches/transforms-4/73edea8bd5764d33b17f1efe21869fc8/transformed/appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /home/vortex/.gradle/caches/transforms-4/73edea8bd5764d33b17f1efe21869fc8/transformed/appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/vortex/.gradle/caches/transforms-4/fcc72929abf7ab70d5bd488056277013/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/vortex/.gradle/caches/transforms-4/fcc72929abf7ab70d5bd488056277013/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/vortex/.gradle/caches/transforms-4/50cb2606853dba48988d7895609596c9/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/vortex/.gradle/caches/transforms-4/50cb2606853dba48988d7895609596c9/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/vortex/.gradle/caches/transforms-4/8b812f897cbfdb95ce6a244d65e73375/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/vortex/.gradle/caches/transforms-4/8b812f897cbfdb95ce6a244d65e73375/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/vortex/.gradle/caches/transforms-4/06899ad34059219eddc5e1f866c33acb/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/vortex/.gradle/caches/transforms-4/06899ad34059219eddc5e1f866c33acb/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /home/vortex/.gradle/caches/transforms-4/73330325b6b38df076df80d3d639ed2f/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /home/vortex/.gradle/caches/transforms-4/73330325b6b38df076df80d3d639ed2f/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/vortex/.gradle/caches/transforms-4/91f69ae0b6602f583ef334e07bc064ad/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/vortex/.gradle/caches/transforms-4/91f69ae0b6602f583ef334e07bc064ad/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/vortex/.gradle/caches/transforms-4/50cee7bea3b7216f9454a162ed58ac2e/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/vortex/.gradle/caches/transforms-4/50cee7bea3b7216f9454a162ed58ac2e/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing-ktx:2.0.0] /home/vortex/.gradle/caches/transforms-4/0d34e8be6c0b1ac58b9f64a659c5160f/transformed/tracing-ktx-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing-ktx:2.0.0] /home/vortex/.gradle/caches/transforms-4/0d34e8be6c0b1ac58b9f64a659c5160f/transformed/tracing-ktx-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing-android:2.0.0] /home/vortex/.gradle/caches/transforms-4/e600b4715ff0909997fce468791ebef6/transformed/tracing/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing-android:2.0.0] /home/vortex/.gradle/caches/transforms-4/e600b4715ff0909997fce468791ebef6/transformed/tracing/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/vortex/.gradle/caches/transforms-4/7e47532fc8952ac6dafed862a59f4d72/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/vortex/.gradle/caches/transforms-4/7e47532fc8952ac6dafed862a59f4d72/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] /home/vortex/.gradle/caches/transforms-4/e8d8cae9808c1a23afefa5cc13c027c7/transformed/core-viewtree-1.0.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] /home/vortex/.gradle/caches/transforms-4/e8d8cae9808c1a23afefa5cc13c027c7/transformed/core-viewtree-1.0.0/AndroidManifest.xml:5:5-44
+	android:targetSdkVersion
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/vortex/uiCB13/app/src/main/AndroidManifest.xml
+service#androidx.camera.core.impl.MetadataHolderService
+ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:24:9-33:19
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:29:9-33:78
+MERGED from [androidx.camera:camera-core:1.4.2] /home/vortex/.gradle/caches/transforms-4/7726326dd5ab633039279a9bf1e2f0d6/transformed/camera-core-1.4.2/AndroidManifest.xml:29:9-33:78
+	tools:node
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:29:13-31
+	android:enabled
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:26:13-36
+	android:exported
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:28:13-75
+	android:name
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:25:13-75
+meta-data#androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER
+ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:30:13-32:89
+	android:value
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:32:17-86
+	android:name
+		ADDED from [androidx.camera:camera-camera2:1.4.2] /home/vortex/.gradle/caches/transforms-4/9f5e7b1e22a3579f97358190c0ff416b/transformed/camera-camera2-1.4.2/AndroidManifest.xml:31:17-103
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+permission#com.cb13.ui.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+uses-permission#com.cb13.ui.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/vortex/.gradle/caches/transforms-4/f1359343e86c12a502baced3dbb19fc2/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/vortex/.gradle/caches/transforms-4/9073134a8279528934d3b9f3606d7f26/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/vortex/.gradle/caches/transforms-4/a50a3949bfc0e420cf5cbe58220171fd/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92

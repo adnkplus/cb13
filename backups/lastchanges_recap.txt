@@ -1,0 +1,41 @@
+Full Recap — CB13 Project
+1. Build System Fixes
+#	Issue	Fix
+1	XML parse error (literal \n in manifest)	Recreated AndroidManifest.xml clean
+2	Java 11 vs required Java 17	gradle.properties → org.gradle.java.home=/opt/android-studio/android-studio/jbr
+3	CameraX 1.3.4 → 1.4.2	Bumped 4 deps in build.gradle
+4	androidx.core:core version conflict	Bumped 1.15.0 → 1.16.0
+2. Screen Orientation
+#	Issue	Fix
+5	android:screenOrientation="portrait" in manifest was forcing system auto-rotate ON	Removed from manifest, added setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) in code
+3. Layout Positioning (Xperia 1 VI only)
+#	Issue	Fix
+6	Dials 0, 5, 6, 7, 8 too high	lowerRow1: 455 → 1853, lowerRow2: 580 → 1978 (in MainActivity.java)
+7	Sliders 0, 5, 6, 7, 8 too high	Added 3 spacer Views (466dp / −466dp / +466dp) around addSlider calls
+8	FIRE button + command bar too low	fp.bottomMargin: 82 → 139, cp.setMargins: 18 → 75
+9	XML activity_cockpit.xml dial margins	No effect — dials are positioned in Java code, not XML
+4. Status Line (File Name Display)
+#	Change
+10	Added class field TextView status; (line 142)
+11	Initial text: "CB13 / EAN-13 / COCKPIT" → "NEW"
+12	On load: status.setText(fs[w].getName()) in showLoadProfile dialog callback
+5. Scanner — Single-Finger Vertical Zoom
+#	Change
+13	Added FrameLayout wrapper + transparent zoomOverlay on top of PreviewView
+14	Single-finger vertical drag: up = zoom in, down = zoom out
+15	Throttled to 50ms between setZoomRatio calls
+16	lastY[] tracking (no getHistoricalY)
+17	ready[] flag with 1.5s delay after camera bind
+18	Max zoom read from camera hardware
+19	Zoom reset on dismiss
+Scanner single-finger vertical zoom GitHub
+Key Files
+File	Role
+/home/vortex/uiCB13/app/src/main/java/com/cb13/MainActivity.java	Main logic, layout, scanner, sliders
+/home/vortex/uiCB13/app/src/main/java/com/cb13/NeonDialView.java	Visual-only dial (no touch)
+/home/vortex/uiCB13/app/src/main/java/com/cb13/CockpitIntegration.java	Styling helpers
+/home/vortex/uiCB13/app/src/main/res/layout/activity_cockpit.xml	Unused — layout built in code
+/home/vortex/uiCB13/app/src/main/AndroidManifest.xml	Permissions, activity declaration
+/home/vortex/uiCB13/gradle.properties	Java 17 path
+/home/vortex/uiCB13/app/build.gradle	Dependencies
+Total: ~19 distinct changes across 5 files

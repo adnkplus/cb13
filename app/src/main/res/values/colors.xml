@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen-only cockpit palette. Printer output is handled separately. -->
+    <color name="cockpit_black">#03070B</color>
+    <color name="cockpit_panel">#09131B</color>
+    <color name="cockpit_panel_2">#0D1B24</color>
+    <color name="neon_cyan">#35F2C2</color>
+    <color name="neon_cyan_bright">#8AFFF0</color>
+    <color name="neon_blue">#35BFFF</color>
+    <color name="neon_magenta">#FF3FA4</color>
+    <color name="neon_red">#FF4568</color>
+    <color name="neon_amber">#FFB43B</color>
+    <color name="glass_line">#4635F2C2</color>
+    <color name="text_primary">#E9FFFA</color>
+    <color name="text_secondary">#78A5A5</color>
+    <color name="text_dim">#47636A</color>
+</resources>

@@ -1,0 +1,4 @@
+com.cb13.test.app-androidTest-0 /home/vortex/uiCB13/app/build/generated/res/resValues/androidTest/debug
+com.cb13.test.app-mergeDebugAndroidTestResources-1 /home/vortex/uiCB13/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+com.cb13.test.app-mergeDebugAndroidTestResources-2 /home/vortex/uiCB13/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+com.cb13.test.app-debugAndroidTest-3 /home/vortex/uiCB13/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources

@@ -1,0 +1,26 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.cb13'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.cb13.ui'
+        minSdk 26
+        targetSdk 35
+        versionCode 812
+        versionName '8.12-SCAN'
+    }
+    buildTypes { release { minifyEnabled false } }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+dependencies { implementation 'androidx.core:core:1.15.0' 
+    implementation "com.google.zxing:core:3.5.4"
+    implementation "androidx.camera:camera-core:1.4.2"
+    implementation "androidx.camera:camera-camera2:1.4.2"
+    implementation "androidx.camera:camera-lifecycle:1.4.2"
+    implementation "androidx.camera:camera-view:1.4.2"
+    implementation 'androidx.fragment:fragment:1.9.1'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+}

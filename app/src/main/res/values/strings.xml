@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CB13</string>
+    <string name="scan">SCAN</string>
+    <string name="share_print">SHARE / PRINT</string>
+    <string name="shift_fine">SHIFT FINE TUNE</string>
+</resources>
